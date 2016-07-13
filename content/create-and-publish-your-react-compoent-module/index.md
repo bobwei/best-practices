@@ -1,7 +1,7 @@
-# 如何模組化妳的 React Component
+# 如何模組化妳的 React Component - 1
 
 <span class="author">
-  Author : [Bob Wei](http://bobwei.com)
+  Author : [Bob Wei](https://fb.me/coolyu)
 </span>
 
 * [NPM](#npm)
