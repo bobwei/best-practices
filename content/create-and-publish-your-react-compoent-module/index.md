@@ -7,6 +7,7 @@
 * [NPM](#npm)
 * [初始化 npm package](#初始化-npm-package)
 * [建立 nodejs module](#建立-nodejs-module)
+* [透過 npm link 測試 component](#透過-npm-link-測試-component)
 
 
 ## NPM
@@ -78,7 +79,7 @@ package.json
 
 ```
 {
-  "name": "react-component-module-template",
+  "name": "my-react-component-module",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
@@ -109,6 +110,43 @@ package.json
   }
 }
 
+```
+
+
+## 透過 npm link 測試 component
+
+現在我們有了 Button.js，此時我們需要透過外部 project 來使用並測試此 component。npm 提供了此指令，讓尚未發佈到 npm 的 component 也可以在 local 端進行測試。npm link 指令連結此 module 至 glabol node_modules。
+
+在此 module 資料夾執行以下指令 ( This creates a symbolic link from a global folder to this project )
+
+```
+npm link
+```
+
+在欲使用此 component 的專案執行以下指令 ( This creates a symbolic link from project folder to global folder )
+
+```
+npm link ${your_module_name}
+```
+
+建立 link 之後，即可在外部 project 使用此 component
+
+```
+import { Button } from 'my-react-component-module';
+
+const IndexPage = () => (
+  <div className="index">
+    <Button
+      value="This is a Button"
+    />
+  </div>
+);
+```
+
+若想要取消連結，可使用此指令
+
+```
+npm unlink
 ```
 
 
