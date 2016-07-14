@@ -12,7 +12,7 @@
 
 ## NPM
 
-![](npm.jpg)
+[![](npm.jpg)](https://www.npmjs.com/)
 
 
 ## 初始化 npm package
