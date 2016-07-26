@@ -1,4 +1,4 @@
-# Running Docker on AWS EC2 - v1
+# Running Docker Host on AWS EC2 and Connect from Remote
 
 * [One Script to Get Docker on Ubuntu](#one-script-to-get-docker-on-ubuntu)
 * [Generate Credentials](#generate-credentials)
@@ -17,8 +17,10 @@ curl -fsSL https://experimental.docker.com/ | sh
 #### Generate Credentials
 
 ```
-sudo mkdir -p /var/docker && cd /var/docker
-curl -fsSL https://gist.githubusercontent.com/bobwei/572506b2de3e35d4cabb230f10a06e07/raw/1867166dd758f5b191f57d4452be238053051b79/generate_docker_cert.sh | sudo sh
+mkdir -p ~/docker && cd ~/docker
+ln -s ~/docker /var/docker
+export HOSTNAME=YOUR_HOSTNAME
+curl -fsSL https://gist.githubusercontent.com/bobwei/572506b2de3e35d4cabb230f10a06e07/raw/a5c0e499f71b13be69a70b2e06cb8f8708db2255/generate_docker_cert.sh | sudo sh
 ```
 
 References
@@ -37,7 +39,7 @@ DOCKER_OPTS="-D --dns 8.8.8.8 --dns 8.8.4.4 -H tcp://0.0.0.0:2376 -H unix:///var
 
 References
 
-* [docker config example](docker_config)
+* [docker config example](./docker_config)
 * [Protect the Docker daemon socket](https://docs.docker.com/engine/security/https/)
 
 
@@ -45,17 +47,17 @@ References
 
 download certificates and keys from docker host
 ```
-scp -i ~/.ssh/your_key -r ubuntu@YOUR_DOCKER_HOST:/var/docker ~/.docker/devmachine
+scp -i ~/.ssh/your_key -r ubuntu@HOSTNAME:~/docker ~/.docker/HOSTNAME
 ```
 
 setup env for devmachine
 ```
-export \
-  DOCKER_HOST=tcp://YOUR_DOCKER_HOST:2376 \
-  DOCKER_CERT_PATH=~/.docker/devmachine
+export DOCKER_HOST=tcp://HOSTNAME:2376
+export DOCKER_CERT_PATH=~/.docker/HOSTNAME
+export DOCKER_TLS_VERIFY=1
 ```
 
-Finally, you can operate with docker commands like this
+Finally, you can operate with docker commands
 ```
-docker --tls ps
+docker ps
 ```
